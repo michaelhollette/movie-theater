@@ -22,7 +22,7 @@ showsRouter.get("/:id/users", async (req,res)=>{
     res.json(users)
 })
 
-showsRouter.put("/:id/availability", async (req,res)=>{
+showsRouter.put("/:id/availabile", async (req,res)=>{
     let show = await Show.findByPk(req.params.id);
     if (show["available"] == true){
         await Show.update({available: false}, {where: {id : req.params.id}});

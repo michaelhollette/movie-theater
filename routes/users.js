@@ -30,6 +30,20 @@ usersRouter.put("/:id/:show", async (req,res) =>{
 
     
 })
+usersRouter.post("/", [check("username").isEmail()], async (req,res) =>{
+   
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        res.json({error: errors.array()})
+    }else{
+        await User.create(req.body);
+        const users = await User.findAll();
+        res.json(users);
 
+    }
+    
+    
+    
+});
 
 module.exports = {usersRouter}

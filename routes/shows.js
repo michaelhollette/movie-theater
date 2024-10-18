@@ -49,5 +49,21 @@ showsRouter.delete("/:id", async (req,res) =>{
     res.json(shows)
 })
 
+showsRouter.post("/", [check("title").not().isEmpty().trim(),check("title").isLength({min: 0, max: 25})], async (req,res) =>{
+   
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        res.json({error: errors.array()})
+    }else{
+        await Show.create(req.body);
+        const shows = await Show.findAll();
+        res.json(shows);
+
+    }
+    
+    
+    
+});
+
 
 module.exports = {showsRouter}
